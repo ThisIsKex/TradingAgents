@@ -175,6 +175,25 @@ MODEL_OPTIONS: ProviderModeOptions = {
             ("Custom model ID", "custom"),
         ],
     },
+    # AWS Bedrock: uses cross-region inference profile IDs. The prefix
+    # (us./eu.) determines the region group. Change to "us." if needed.
+    # Users can also enter a full model ARN via "Custom model ID".
+    "bedrock": {
+        "quick": [
+            ("Nova Lite - Fast, cost-effective", "eu.amazon.nova-lite-v1:0"),
+            ("Nova Micro - Lowest latency, text-only", "eu.amazon.nova-micro-v1:0"),
+            ("Claude Sonnet 4 - Balanced", "eu.anthropic.claude-sonnet-4-20250514-v1:0"),
+            ("Claude Haiku 3.5 - Fast", "eu.anthropic.claude-3-5-haiku-20241022-v1:0"),
+            ("Custom model ID", "custom"),
+        ],
+        "deep": [
+            ("Nova Premier - Most capable Amazon model", "eu.amazon.nova-premier-v1:0"),
+            ("Nova Pro - Balanced multimodal", "eu.amazon.nova-pro-v1:0"),
+            ("Claude Sonnet 4 - Balanced", "eu.anthropic.claude-sonnet-4-20250514-v1:0"),
+            ("Claude Opus 4 - Max intelligence", "eu.anthropic.claude-opus-4-20250514-v1:0"),
+            ("Custom model ID", "custom"),
+        ],
+    },
 }
 
 
