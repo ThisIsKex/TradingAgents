@@ -2,10 +2,19 @@
 
 from __future__ import annotations
 
+import os
 from typing import Dict, List, Tuple
 
 ModelOption = Tuple[str, str]
 ProviderModeOptions = Dict[str, Dict[str, List[ModelOption]]]
+
+
+def _bedrock_region_prefix() -> str:
+    """Return 'us' or 'eu' based on AWS_REGION. Defaults to 'eu'."""
+    region = os.environ.get("AWS_REGION") or os.environ.get("AWS_DEFAULT_REGION", "")
+    if region.startswith("us"):
+        return "us"
+    return "eu"
 
 
 # Shared model list for GLM via Z.AI (international) and BigModel (China).
@@ -172,6 +181,24 @@ MODEL_OPTIONS: ProviderModeOptions = {
             ("GLM-4.7-Flash:latest (30B)", "glm-4.7-flash:latest"),
             ("GPT-OSS:latest (20B)", "gpt-oss:latest"),
             ("Qwen3:latest (8B)", "qwen3:latest"),
+            ("Custom model ID", "custom"),
+        ],
+    },
+    # AWS Bedrock: cross-region inference profile IDs are prefixed by
+    # region group (eu./us.), determined from AWS_REGION at import time.
+    "bedrock": {
+        "quick": [
+            ("Nova Lite - Fast, cost-effective", f"{_bedrock_region_prefix()}.amazon.nova-lite-v1:0"),
+            ("Nova Micro - Lowest latency, text-only", f"{_bedrock_region_prefix()}.amazon.nova-micro-v1:0"),
+            ("Claude Sonnet 4 - Balanced", f"{_bedrock_region_prefix()}.anthropic.claude-sonnet-4-20250514-v1:0"),
+            ("Claude Haiku 3.5 - Fast", f"{_bedrock_region_prefix()}.anthropic.claude-3-5-haiku-20241022-v1:0"),
+            ("Custom model ID", "custom"),
+        ],
+        "deep": [
+            ("Nova Premier - Most capable Amazon model", f"{_bedrock_region_prefix()}.amazon.nova-premier-v1:0"),
+            ("Nova Pro - Balanced multimodal", f"{_bedrock_region_prefix()}.amazon.nova-pro-v1:0"),
+            ("Claude Sonnet 4 - Balanced", f"{_bedrock_region_prefix()}.anthropic.claude-sonnet-4-20250514-v1:0"),
+            ("Claude Opus 4 - Max intelligence", f"{_bedrock_region_prefix()}.anthropic.claude-opus-4-20250514-v1:0"),
             ("Custom model ID", "custom"),
         ],
     },

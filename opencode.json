@@ -1,0 +1,21 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "provider": {
+      "docker": {
+        "npm": "@ai-sdk/openai-compatible",
+        "name": "Docker Model Runner",
+        "options": {
+          "baseURL": "http://localhost:12434/engines/llama.cpp/v1"
+        },
+        "models": {
+          "ai/qwen3-coder": {
+            "name": "Qwen3 Coder (Docker)"
+          }
+        }
+      }
+    },
+    "instructions": ["AGENTS.md"],
+    "skills": {
+      "paths": [".opencode/skills"]
+    }
+  }
